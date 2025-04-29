@@ -1,5 +1,6 @@
 import { Button } from "@/components/button";
 import { CardContent, CardRoot } from "@/components/card";
+import { MOCKED_LESSONS } from "@/consts/mocked-lessons";
 import { TranslateSubjectEnum, type SubjectEnumKey } from "@/enums/translate-subject";
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
@@ -12,20 +13,6 @@ interface SubjectPageProps {
 
 export default async function SubjectPage({ params }: SubjectPageProps) {
   const { subject } = await params;
-
-  const MOCKED_LESSONS = [
-    {
-      id: 1,
-      title: "Átomo",
-      createdAt: new Date(),
-    },
-    {
-      id: 2,
-      title: "Movimento",
-      createdAt: new Date(),
-      parentId: 1,
-    }
-  ]
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
@@ -40,10 +27,10 @@ export default async function SubjectPage({ params }: SubjectPageProps) {
           {MOCKED_LESSONS.map((lesson) => (
             <CardRoot className="flex-1 min-w-[49%]" key={lesson.id}>
               <CardContent asChild>
-                <Link href={`/${subject}`}>
+                <Link href={`/${subject}/lessons/${lesson.id}`}>
                   <div className="p-4">
                     <span className="text-[14px] uppercase font-medium">
-                      Capítulo {MOCKED_LESSONS.indexOf(lesson) + 1}
+                      Volume {MOCKED_LESSONS.indexOf(lesson) + 1}
                     </span>
                     <h1 className="font-bold text-2xl">
                       {lesson.title}
