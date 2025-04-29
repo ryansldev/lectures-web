@@ -33,7 +33,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
               </span>
               <h1 className="text-2xl">
                 Capítulo {key+1}: {" "}
-                {MOCKED_LESSONS.find((lesson) => lesson.id === Number(lessonId))?.title}
+                {note.title}
               </h1>
             </div>
             <div key={note.id} className="w-full bg-neutral-900 rounded-xl pt-3">
