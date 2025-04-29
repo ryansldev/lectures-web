@@ -1,10 +1,11 @@
 import { Box, Card, type BoxProps, type CardProps } from "@radix-ui/themes";
+import { twMerge } from "tailwind-merge";
 
 type CardRootProps = BoxProps & {}
 
-export function CardRoot(props: CardRootProps) {
+export function CardRoot({ className, ...props }: CardRootProps) {
   return (
-    <Box className="bg-neutral-800 p-2 rounded-xl border border-neutral-700 text-neutral-300 hover:border-neutral-600 transition-colors select-none cursor-pointer" {...props} />
+    <Box className={twMerge("bg-neutral-900 p-2 rounded-xl border border-neutral-800 text-neutral-300 hover:border-atom-200 transition-colors select-none cursor-pointer", className)} {...props} />
   )
 }
 
