@@ -6,8 +6,8 @@ interface LogoProps extends Partial<ImageProps>{}
 
 export function Logo(props: LogoProps) {
   return (
-    <div>
-      <Image src="/atom.png" alt="Atom" width={props.width ?? 48} height={props.height ?? 48} quality={props.quality ?? 100} {...props} />
+    <div className={props.className}>
+      <Image src="/atom.png" alt="Atom" width={512} height={512} quality={props.quality ?? 100} {...props} />
     </div>
   )
 }
