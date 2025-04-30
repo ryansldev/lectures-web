@@ -3,6 +3,8 @@ import { MOCKED_LESSONS } from "@/consts/mocked-lessons";
 import { MOCKED_NOTES } from "@/consts/mocked-notes";
 import { TranslateSubjectEnum, type SubjectEnumKey } from "@/enums/translate-subject";
 import { ChevronRight, PlusIcon } from "lucide-react";
+import Link from "next/link";
+import { Fragment } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -25,7 +27,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
     <div className="min-h-screen flex flex-col items-center justify-center">
       <div className="flex flex-col w-full h-full max-w-[60dvw] justify-center gap-4">
         {notes.map((note, key) => (
-          <>
+          <Fragment key={key}>
             <div className="flex flex-col gap-1">
               <span className="text-[14px] flex gap-0 items-center text-neutral-500">
               Lições de {TranslateSubjectEnum[subject]} <ChevronRight className="w-3 h-3" />
@@ -41,11 +43,13 @@ export default async function LessonPage({ params }: LessonPageProps) {
                 {note.content}
               </Markdown>
             </div>
-          </>
+          </Fragment>
         ))}
-        <Button className="bg-transparent text-neutral-500 hover:bg-transparent">
-          <PlusIcon />
-        </Button>
+        <Link className="w-full flex items-center justify-center" href={`/${subject}/lessons/${lessonId}/create`}>
+          <Button className="w-full flex-1 bg-transparent text-neutral-500 hover:bg-transparent hover:text-atom-800">
+            <PlusIcon />
+          </Button>
+        </Link>
       </div>
     </div>
   )

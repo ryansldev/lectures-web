@@ -29,8 +29,8 @@ export default async function SubjectPage({ params }: SubjectPageProps) {
               <CardContent asChild>
                 <Link href={`/${subject}/lessons/${lesson.id}`}>
                   <div className="p-4">
-                    <span className="text-[14px] uppercase font-medium">
-                      Volume {MOCKED_LESSONS.indexOf(lesson) + 1}
+                    <span className="text-[14px] font-medium text-neutral-500">
+                      Lição #{MOCKED_LESSONS.indexOf(lesson) + 1}
                     </span>
                     <h1 className="font-bold text-2xl">
                       {lesson.title}
