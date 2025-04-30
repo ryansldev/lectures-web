@@ -31,18 +31,18 @@ export default async function LessonPage({ params }: LessonPageProps) {
             <div className="flex flex-col gap-1">
               <span className="text-[14px] flex gap-0 items-center text-neutral-500">
               Lições de {TranslateSubjectEnum[subject]} <ChevronRight className="w-3 h-3" />
-              Volume {MOCKED_LESSONS.indexOf(lesson) + 1}: {lesson.title}
+              Lição {MOCKED_LESSONS.indexOf(lesson) + 1}: {lesson.title}
               </span>
               <h1 className="text-2xl">
                 Capítulo {key+1}: {" "}
                 {note.title}
               </h1>
             </div>
-            <div key={note.id} className="w-full bg-neutral-900 rounded-xl pt-3">
+            <button type="button" key={note.id} className="w-full bg-neutral-900 rounded-xl pt-3 flex items-center justify-start focus:outline-neutral-700 focus:outline-1 ">
               <Markdown remarkPlugins={[remarkGfm]}>
                 {note.content}
               </Markdown>
-            </div>
+            </button>
           </Fragment>
         ))}
         <Link className="w-full flex items-center justify-center" href={`/${subject}/lessons/${lessonId}/create`}>
