@@ -5,8 +5,17 @@ import { Button } from "@/components/button";
 
 import { usePathname, useSearchParams } from 'next/navigation'
 import Link from "next/link";
+import type { SubjectEnumKey } from "@/enums/translate-subject";
 
-export function CreateNoteForm() {
+interface CreateNoteFormProps {
+  subject: SubjectEnumKey;
+  lessonId: number;
+}
+
+export function CreateNoteForm({
+  subject,
+  lessonId
+}: CreateNoteFormProps) {
   const searchParams = useSearchParams()
 
   const pathname = usePathname()
@@ -36,8 +45,6 @@ export function CreateNoteForm() {
   
   const position = step - 1
 
-  console.log(pathname)
-
   return (
     <form className="flex flex-col gap-4 w-full">
       <Progress value={(step/totalSteps) * 100} />
@@ -48,7 +55,7 @@ export function CreateNoteForm() {
         </div>
         <div className="flex gap-3 flex-wrap">
           
-          <Link href={`${pathname}?step=${step === 1 ? step : step-1}`}>
+          <Link href={`${step === 1 ? `/${subject}/lessons/${lessonId}` : `${pathname}/?step=${step-1}`}`}>
             <Button type="button" className="bg-neutral-800 hover:bg-neutral-700 text-neutral-300">
               Voltar
             </Button>
