@@ -55,9 +55,6 @@ export function CreateNoteForm({
 
   const formRef = useRef<HTMLFormElement>(null)
 
-  console.log(drafts)
-  console.log(position)
-
   async function handleSubmit(data: FormData) {
     const draft = data.get("draft") as string;
     changeDraft(draft, step)
