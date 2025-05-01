@@ -55,11 +55,13 @@ export function CreateNoteForm({
 
   const formRef = useRef<HTMLFormElement>(null)
 
+  console.log(drafts)
+  console.log(position)
+
   async function handleSubmit(data: FormData) {
     const draft = data.get("draft") as string;
     changeDraft(draft, step)
     if(step === totalSteps) {
-      console.log(draft)
       clear()
     }
     formRef.current?.getElementsByTagName("a")?.[1]?.click()
@@ -80,7 +82,7 @@ export function CreateNoteForm({
           <p className="text-neutral-400">{STEPS[position].description}</p>
         </div>
         <div className="flex gap-2">
-          <Textarea className="flex-1 resize-none" placeholder="Digite aqui" name="draft" defaultValue={drafts[position] ?? ""} />
+          <Textarea className="flex-1 resize-none" placeholder="Digite aqui" name="draft" defaultValue={drafts[position - 1] ?? ""} />
         </div>
         <div className="flex gap-3 flex-wrap">
           <Link href={`${step === 1 ? `/${subject}/lessons/${lessonId}` : `${pathname}/?step=${step-1}`}`}>
