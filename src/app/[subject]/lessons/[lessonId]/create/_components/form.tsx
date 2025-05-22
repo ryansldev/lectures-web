@@ -4,12 +4,11 @@ import { Progress } from "@/components/progress";
 import { Button } from "@/components/button";
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import Link from "next/link";
 import type { SubjectEnumKey } from "@/enums/translate-subject";
 import { useNote } from "@/stores/useNote";
-import { Textarea } from "@/components/textarea";
-import { useEffect, useRef } from "react";
-import { Separator } from "@radix-ui/themes";
+import { useEffect, useRef, useState } from "react";
+import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
+import type { JSONContent } from "@tiptap/react";
 
 interface CreateNoteFormProps {
   subject: SubjectEnumKey;
@@ -55,18 +54,29 @@ export function CreateNoteForm({
 
   const formRef = useRef<HTMLFormElement>(null)
 
-  async function handleSubmit(data: FormData) {
-    const draft = data.get("draft") as string;
-    changeDraft(draft, step)
+  const [content, setContent] = useState<JSONContent>(drafts[position] || drafts[position - 1] || "");
+
+  function handleChangeDraft() {
+    const draft = content;
+    changeDraft(draft, position)
     if(step === totalSteps) {
       clear()
     }
+  }
+
+  async function handleSubmit() {
+    handleChangeDraft()
     formRef.current?.getElementsByTagName("a")?.[1]?.click()
   }
 
+  function onBack() {
+    handleChangeDraft()
+    formRef?.current?.getElementsByTagName("a")?.[0]?.click()
+  }
+
   useEffect(() => {
-    if(drafts.length !== step) {
-      router.push(`${pathname}?step=${drafts.length > 0 ? drafts.length : 1}`)
+    if(drafts.length === 0) {
+      router.push(`${pathname}?step=1`)
     }
   }, [])
 
@@ -78,19 +88,21 @@ export function CreateNoteForm({
           <h1 className="text-2xl">{STEPS[position].title}</h1>
           <p className="text-neutral-400">{STEPS[position].description}</p>
         </div>
-        <div className="flex gap-2">
-          <Textarea className="flex-1 resize-none" placeholder="Digite aqui" name="draft" defaultValue={drafts[position - 1] ?? ""} />
+        <div className="flex flex-col gap-2" onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+        }}>
+          <SimpleEditor setContent={setContent} content={content} />
         </div>
         <div className="flex gap-3 flex-wrap">
-          <Link href={`${step === 1 ? `/${subject}/lessons/${lessonId}` : `${pathname}/?step=${step-1}`}`}>
-            <Button type="button" className="bg-neutral-800 hover:bg-neutral-700 text-neutral-300">
-              Voltar
-            </Button>
-          </Link>
+          <Button onClick={onBack} type="button" className="bg-neutral-800 hover:bg-neutral-700 text-neutral-300">
+            Voltar
+          </Button>
+          <a href={`${step === 1 ? `/${subject}/lessons/${lessonId}` : `${pathname}/?step=${step-1}`}`} />
           <Button type="submit">
             {step !== totalSteps ? "Próxima etapa" : "Finalizar"}
           </Button>
-          <Link
+          <a
             className="hidden"
             href={`${step !== totalSteps ? `${pathname}?step=${step+1}` : `/${subject}/lessons/${lessonId}`}`}
           />
